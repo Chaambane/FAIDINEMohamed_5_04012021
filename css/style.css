@@ -1,0 +1,43 @@
+body{
+    font-family: 'Imbue', serif;
+}
+main{
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #F3E9F1;
+}
+.header_figure_image{
+    height: 100px;
+    width: 50%;
+}
+
+.section_card{
+    margin: 0.5%;
+}
+.borderTeddies{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+/*DETAILS*/
+
+/*PANIER*/
+#affichagePanier{
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+}
+.PersoCard {
+    display: flex;
+
+}
