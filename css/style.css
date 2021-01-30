@@ -32,12 +32,3 @@ main{
 /*DETAILS*/
 
 /*PANIER*/
-#affichagePanier{
-    width: 300px;
-    justify-content: center;
-    align-items: center;
-}
-.PersoCard {
-    display: flex;
-
-}

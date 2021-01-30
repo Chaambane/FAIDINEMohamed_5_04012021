@@ -21,7 +21,7 @@ const afficherArticles = (data) => {
                     <img class="card-img-top" src="${teddie.imageUrl}" style="width: 100%;" alt="image article">
                 <div class="card-body">
                     <h4 class="card-title"><strong>${teddie.name}</strong></h4>
-                    <a href="details.html?id=${teddie._id}" class="btn btn-info">
+                    <a href="produitDetail.html?id=${teddie._id}" class="btn btn-info">
                     <p class="card-text">${teddie.description}</p>
                     <p class="btn btn-dark">${teddie.price} €<span></p>
                     </a>

@@ -1,80 +1,81 @@
-const divAffichagePanier = document.querySelector('#affichagePanier');
-const PrixTotal = document.querySelector("#TotalPanier");
-const totalCommande = document.querySelector('#TotalPanier');
-let mesArticles = JSON.parse(localStorage.getItem('article'));
-
+let idArticles = [];
 const afficherMonpanier = () => {
-    if(mesArticles === null) {
-        divAffichagePanier.innerHTML = 'Votre panier est vide !'
-    } else {
+    if(localStorage.getItem('article') != null) {
+        chargerPanier();
         // console.log(mesArticles);
-        
-        let listeArticles = "";
-        for(let article of mesArticles){
-            listeArticles += 
-            `<div id="${article.Id}" class="row mb-4">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <img class="img-fluid img-thumbnail h-40" src="${article.Image}">
+        for(article of mesArticles){
+            idArticles.push(article.id);
+            let affichagerPanier = document.querySelector('#articlePanier');
+            // console.log(idArticle);
+            affichagerPanier.innerHTML += 
+            `<div class="card m-1">
+                <table class="table">
+                <tr>
+                    <td><strong>Nom : </strong>${article.nom}</td>
+                    <td><strong>Prix(unité) : </strong>${article.prix} €</td>
+                    <td><strong>Couleur : </strong>${article.couleur}</td>
+                    <td>
+                        <div class="input-group">
+                            <button class="btnMoinsArticle input-group-addon btn btn-primary" onclick="bntDecrementerQuantiter('${article.id}')">-</button>
+                            <input type="number" class="item-count form-control text-center" value="${article.quantite}">
+                            <button class="btnPlusArticle input-group-addon btn btn-primary" onclick="bntIncrementerQuantiter('${article.id}')">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="btnSupprimerArticlePanier('${article.id}')">Supprimer</button>
+                    </td>
+                    <td>Quantité : ${article.quantite}</td>
+                </tr>
+                </table>
+                <div class="cart-footer">
+                    <span>Total de votre article : ${((article.prix) * article.quantite).toFixed(2)} €</span>
                 </div>
-                <div>
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <p><strong>${article.Nom}</strong></p>
-                            <p class="mb-2 text-muted text-uppercase small">Color: ${article.Couleur}</p>
-                            </div>
-                            <div>
-                            <div class="mb-0 w-100">
-                                <p>Quantité : ${article.Nombre}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="#!" type="button" class="card-link-secondary small text-uppercase mr-3"> Supprimer article </a>
-                        <p class="mb-0"><em>Prix : ${article.Prix} €</em></p>
-                        </div>
-                        <div>
-                        <p class="mb-0"><strong>Total : ${((article.Prix) * article.Nombre).toFixed(2)} €</strong></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <hr class="mb-4">`
+            </div>`;
         }
-        // console.log(mesArticles);
-        divAffichagePanier.innerHTML = listeArticles;
+    } else {
+        divAffichagePanier.innerHTML = '<p><strong>VOTRE PANIER EST VIDE !</strong></p>'
     }
 }
 afficherMonpanier();
 
-const PrixTotalPanier = () =>{
-    let qteArticleDansPanier = [];
-    let tabPrixTotal =[];
-    for(let articleLs of mesArticles){
-        tedQuantité = articleLs.Nombre;
-        qteArticleDansPanier.push(tedQuantité);
-        console.log(qteArticleDansPanier);
-
-        tedPrix = articleLs.Prix;
-        tabPrixTotal.push(tedPrix);
-    }
-    if(qteArticleDansPanier){
-        let prixTotal = tabPrixTotal.reduce((accumulator, currentValue) => accumulator + currentValue);
-        totalCommande.innerHTML = `TOTAl : ${prixTotal}`;
-        localStorage.setItem("PrixTotal", prixTotal);
-    }
-}
-PrixTotalPanier();
 
 
-// ${(article.Prix * article.Nombre).toFixed(2)}
-// Premier test
 
-
-// `<div class="card">
-//     <img src="${article.Image}" />
-//     <div class="card-title text-center">
-//     <h2>${article.Nom}</h2>
-//     <p class="text-center">${article.Couleur}</p>
-//     <p>Prix de l'article : ${article.Prix}</p>
-//     <p>Quantité : ${article.Nombre}</p>
-// </div>`
+// FORMULAIRE d'envoie
+if (document.getElementById("btnValiderForm")) {
+    document.getElementById("btnValiderForm").addEventListener("click", function () {
+      let Formulaire_Invalide = "";
+      let prenom = document.getElementById("prenom").value;
+      let nom = document.getElementById("nom").value;
+      let address = document.getElementById("address").value;
+      let ville = document.getElementById("ville").value;
+      let email = document.getElementById("email").value;
+      if(formulaire.checkValidity()){
+        let contact = {
+          lastName: prenom,
+          firstName: nom,
+          address: address,
+          city: ville,
+          email: email,
+      }
+        let donneeAEnvoyer = { contact, idArticles};
+        donneeAEnvoyer = JSON.stringify(donneeAEnvoyer);
+        fetch("http://localhost:3000/api/teddies", { 
+            method: "post",
+            headers: { 
+                "Content-Type": "application/json" 
+            },
+            body: donneeAEnvoyer 
+        })
+          .then(response => response.json())
+          .then(data => {
+              console.log(data);
+              sessionStorage.setItem('commande', JSON.stringify(data));
+              console.log(sessionStorage);
+              document.location.href = "/commande.html"
+          })
+          /* Sinon log les erreurs dans la console */
+          .catch(err => console.log('Erreur : ' + err));
+      }
+    });
+  }
