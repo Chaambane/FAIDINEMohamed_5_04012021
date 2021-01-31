@@ -72,6 +72,9 @@ const couleurArticle = (data) => {
     }
 }
 
+let sauvegarderArticle = () =>{
+    localStorage.setItem('article',JSON.stringify(mesArticles));
+}
 
 // LocalStorage
 
@@ -96,7 +99,11 @@ async function sauvegarderDansLocalStorage(){
                 
                 if(articleAjouter) {
                     mesArticles = JSON.parse(articleAjouter);
-                    mesArticles.push(articleChoisie);
+                    mesArticles.forEach((value) => {
+                        if(value.id && value.couleur){
+                            value.quantite ++;
+                        }
+                    });
                     sauvegarderArticle();
                 } else {
                     mesArticles = [];

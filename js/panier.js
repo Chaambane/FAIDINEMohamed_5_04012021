@@ -16,9 +16,9 @@ const afficherMonpanier = () => {
                     <td><strong>Couleur : </strong>${article.couleur}</td>
                     <td>
                         <div class="input-group">
-                            <button class="btnMoinsArticle input-group-addon btn btn-primary" onclick="bntDecrementerQuantiter('${article.id}')">-</button>
+                            <button class="btnMoinsArticle input-group-addon btn btn-primary" onclick="bntDecrementerQuantiter('${article.id}', '${article.couleur}')">-</button>
                             <input type="number" class="item-count form-control text-center" value="${article.quantite}">
-                            <button class="btnPlusArticle input-group-addon btn btn-primary" onclick="bntIncrementerQuantiter('${article.id}')">+</button>
+                            <button class="btnPlusArticle input-group-addon btn btn-primary" onclick="bntIncrementerQuantiter('${article.id}', '${article.couleur}')">+</button>
                         </div>
                     </td>
                     <td>
@@ -32,8 +32,6 @@ const afficherMonpanier = () => {
                 </div>
             </div>`;
         }
-    } else {
-        divAffichagePanier.innerHTML = '<p><strong>VOTRE PANIER EST VIDE !</strong></p>'
     }
 }
 afficherMonpanier();

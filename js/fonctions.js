@@ -12,23 +12,20 @@ chargerPanier();
 }
 
 // Ajouter dans panier
-const ajouterArticleDansPanier = (data) =>{
-    for(let article in panier){
-        if(panier[article].id){
-            panier[article].count ++;
-            sauvegarderArticle();
-            return;
-        }
-    }
-    let panier = [];
-    panier.push(article);
-    sauvegarderArticle();
-}
+    // for(let article in mesArticles){
+    //     if(article.id && article.couleur){
+    //         article.quantite ++;
+    //         sauvegarderArticle();
+    //     }
+    // }
+    // mesArticles = [];
+    // mesArticles.push(articleChoisie);
+    // sauvegarderArticle();
 
 // Bouton incrémenter article
-const bntIncrementerQuantiter = (id) =>{
+const bntIncrementerQuantiter = (id, couleur) =>{
     for(article of mesArticles){
-        if(article.id === id){
+        if(article.id === id && article.couleur === couleur){
             article.quantite ++;
         }
     }
@@ -37,9 +34,9 @@ const bntIncrementerQuantiter = (id) =>{
 }
 
 // Bouton décrementer compteur article
-const bntDecrementerQuantiter = (id) =>{
+const bntDecrementerQuantiter = (id, couleur) =>{
     for(article of mesArticles){
-        if(article.id === id){
+        if(article.id === id && article.couleur === couleur){
             article.quantite --;
         }
     }
@@ -53,7 +50,7 @@ mesArticles.forEach((value) => {
     prixtotalPanier += (value.quantite * value.prix); 
 });
 let totalArticle = document.querySelector("#TotalPanier");
-totalArticle.textContent = "Total de votre panier : " + (prixtotalPanier.toFixed(2)) + " €";
+totalArticle.innerHTML = "Total de votre panier : " + (prixtotalPanier.toFixed(2)) + " €";
 
 // Bouton Supprimer un article du panier
 const btnSupprimerArticlePanier = (id) => {
