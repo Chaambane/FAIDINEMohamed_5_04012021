@@ -65,13 +65,14 @@ if (boutonValidation) {
                 },
                 body: order 
             })
-            .then(response => response.json()) 
-                .then(data => {
+            .then((response) => 
+                response.json() 
+            .then(data => {
                     console.log(data);
-                    localStorage.setItem('order', JSON.stringify(data));
+                    localStorage.setItem('order', JSON.stringify(data))
                     console.log(localStorage);
                     window.location = "./commande.html"
-                }
+                })
             ).catch(err => console.log('Erreur : ' + err));
         }
     })

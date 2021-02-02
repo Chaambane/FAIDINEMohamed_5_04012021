@@ -75,6 +75,8 @@ const totalPanier = () => {
     let totalArticle = document.querySelector("#TotalPanier");
     return totalArticle.innerHTML = "Total de votre Commande : " +  totalCommande.toFixed(2) + " € ";
 };
+localStorage.setItem("TTPanier", totalPanier());
+
 
 // Bouton Supprimer un article du panier
 const btnSupprimerArticlePanier = () => {
