@@ -23,7 +23,7 @@ const afficherArticles = (data) => {
                     <h4 class="card-title"><strong>${teddie.name}</strong></h4>
                     <a href="produitDetail.html?id=${teddie._id}" class="btn btn-info">
                     <p class="card-text">${teddie.description}</p>
-                    <p class="btn btn-dark">${teddie.price} €<span></p>
+                    <p class="btn btn-dark">${teddie.price / 200} €<span></p>
                     </a>
                 </div>
             </div>

@@ -1,3 +1,27 @@
+// PRODUIT DETAIL
+
+// Nombre d'article qu'on souhaite
+const selectionneQuantité = () => {
+    let quantiteArticle = document.querySelector('#quantite')
+    for(let i = 1; i <= 10; i++){ 
+        quantiteArticle.innerText += i;
+        quantiteArticle.append(choixQuantité);
+    }
+}
+
+
+// Choix de la couleur du nounours
+const couleurArticle = (data) => {
+    let couleur = document.querySelector('#choixCouleur')
+    for(let i = 0; i < data.colors.length; i++){
+        let couleurChoisie = document.createElement("option");
+        couleurChoisie.innerText = data.colors[i];
+        couleur.append(couleurChoisie);
+    }
+}
+
+// PANIER
+
 // Sauvegarder un article dans localStorage
 let sauvegarderArticle = () =>{
     localStorage.setItem('article',JSON.stringify(mesArticles));
@@ -10,17 +34,6 @@ let chargerPanier = () =>{
 if(localStorage.getItem('article') != null){
 chargerPanier();
 }
-
-// Ajouter dans panier
-    // for(let article in mesArticles){
-    //     if(article.id && article.couleur){
-    //         article.quantite ++;
-    //         sauvegarderArticle();
-    //     }
-    // }
-    // mesArticles = [];
-    // mesArticles.push(articleChoisie);
-    // sauvegarderArticle();
 
 // Bouton incrémenter article
 const bntIncrementerQuantiter = (id, couleur) =>{
@@ -45,20 +58,18 @@ const bntDecrementerQuantiter = (id, couleur) =>{
 }
 
 //Total panier
-let prixtotalPanier = 0;
-mesArticles.forEach((value) => {
-    prixtotalPanier += (value.quantite * value.prix); 
-});
-let totalArticle = document.querySelector("#TotalPanier");
-totalArticle.innerHTML = "Total de votre panier : " + (prixtotalPanier.toFixed(2)) + " €";
+const totalPanier = () => {
+    let totalCommande = 0;
+    for(article of mesArticles){
+        totalCommande += (article.prix / 200) * article.quantite
+    }
+    let totalArticle = document.querySelector("#TotalPanier");
+    return totalArticle.innerHTML = "Total de votre Commande : " +  totalCommande.toFixed(2) + " € ";
+}
 
 // Bouton Supprimer un article du panier
-const btnSupprimerArticlePanier = (id) => {
-    for(article of mesArticles){
-        if(article.id === id){
-            mesArticles.splice(article, 1);
-        }
-    }
+const btnSupprimerArticlePanier = () => {
+    mesArticles.splice(article, 1);
     sauvegarderArticle();
     location.reload();
 }

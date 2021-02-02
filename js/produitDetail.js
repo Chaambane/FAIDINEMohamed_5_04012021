@@ -53,29 +53,6 @@ const afficherUnArticle = (data) => {
  couleurArticle(data);
 }
 
-// Nombre d'article qu'on souhaite
-const selectionneQuantité = () => {
-    let quantiteArticle = document.querySelector('#quantite')
-    for(let i = 1; i <= 10; i++){ 
-        quantiteArticle.innerText += i;
-        quantiteArticle.append(choixQuantité);
-    }
-}
-
-// Choix de la couleur du nounours
-const couleurArticle = (data) => {
-    let couleur = document.querySelector('#choixCouleur')
-    for(let i = 0; i < data.colors.length; i++){
-        let couleurChoisie = document.createElement("option");
-        couleurChoisie.innerText = data.colors[i];
-        couleur.append(couleurChoisie);
-    }
-}
-
-let sauvegarderArticle = () =>{
-    localStorage.setItem('article',JSON.stringify(mesArticles));
-}
-
 // LocalStorage
 
 const validerArticle = document.querySelector(".btnAjouterPanier");
@@ -95,17 +72,13 @@ async function sauvegarderDansLocalStorage(){
                     couleur : document.querySelector('#choixCouleur').value,
                     quantite : document.querySelector('#quantite').value,
                 }
-                let articleAjouter = localStorage.getItem('article');
+                let ajouterArticle = localStorage.getItem('article');
                 
-                if(articleAjouter) {
-                    mesArticles = JSON.parse(articleAjouter);
-                    mesArticles.forEach((value) => {
-                        if(value.id && value.couleur){
-                            value.quantite ++;
-                        }
-                    });
+                if(ajouterArticle){
+                    mesArticles = JSON.parse(ajouterArticle);
+                    mesArticles.push(articleChoisie);
                     sauvegarderArticle();
-                } else {
+                } else{
                     mesArticles = [];
                     mesArticles.push(articleChoisie);
                     sauvegarderArticle();

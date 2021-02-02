@@ -12,7 +12,7 @@ const afficherMonpanier = () => {
                 <table class="table">
                 <tr>
                     <td><strong>Nom : </strong>${article.nom}</td>
-                    <td><strong>Prix(unité) : </strong>${article.prix} €</td>
+                    <td><strong>Prix(unité) : </strong>${article.prix / 200} €</td>
                     <td><strong>Couleur : </strong>${article.couleur}</td>
                     <td>
                         <div class="input-group">
@@ -28,10 +28,11 @@ const afficherMonpanier = () => {
                 </tr>
                 </table>
                 <div class="cart-footer">
-                    <span>Total de votre article : ${((article.prix) * article.quantite).toFixed(2)} €</span>
+                    <span>Total de votre article : ${((article.prix / 200) * article.quantite).toFixed(2)} €</span>
                 </div>
             </div>`;
         }
+        totalPanier();
     }
 }
 afficherMonpanier();
@@ -40,40 +41,37 @@ afficherMonpanier();
 
 
 // FORMULAIRE d'envoie
-if (document.getElementById("btnValiderForm")) {
-    document.getElementById("btnValiderForm").addEventListener("click", function () {
-      let Formulaire_Invalide = "";
-      let prenom = document.getElementById("prenom").value;
-      let nom = document.getElementById("nom").value;
-      let address = document.getElementById("address").value;
-      let ville = document.getElementById("ville").value;
-      let email = document.getElementById("email").value;
-      if(formulaire.checkValidity()){
-        let contact = {
-          lastName: prenom,
-          firstName: nom,
-          address: address,
-          city: ville,
-          email: email,
-      }
-        let donneeAEnvoyer = { contact, idArticles};
-        donneeAEnvoyer = JSON.stringify(donneeAEnvoyer);
-        fetch("http://localhost:3000/api/teddies", { 
-            method: "post",
-            headers: { 
-                "Content-Type": "application/json" 
-            },
-            body: donneeAEnvoyer 
-        })
-          .then(response => response.json())
-          .then(data => {
-              console.log(data);
-              sessionStorage.setItem('commande', JSON.stringify(data));
-              console.log(sessionStorage);
-              document.location.href = "/commande.html"
-          })
-          /* Sinon log les erreurs dans la console */
-          .catch(err => console.log('Erreur : ' + err));
-      }
-    });
-  }
+let boutonValidation = document.querySelector("#btnValiderForm");
+let formulaireCommande = document.querySelector("#formulaireCommande");
+if (boutonValidation) {
+    boutonValidation.addEventListener("click", (event) => {
+        if(formulaireCommande.checkValidity()){
+            event.preventDefault();
+            let contact = {
+            firstName : document.getElementById("form_prenom").value,
+            lastName : document.getElementById("form_nom").value,
+            adresse : document.getElementById("form_address").value,
+            city : document.getElementById("form_ville").value,
+            email : document.getElementById("form_email").value
+            }
+            let order = { contact, idArticles};
+            order = JSON.stringify(order);
+        
+            fetch("http://localhost:3000/api/teddies/order", { 
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json" 
+                },
+                body: order 
+            })
+            .then(response => response.json()) 
+                .then(data => {
+                    console.log(data);
+                    sessionStorage.setItem('order', JSON.stringify(data));
+                    console.log(sessionStorage);
+                    window.location = "./commande.html"
+                }
+            ).catch(err => console.log('Erreur : ' + err));
+        }
+    })
+}
