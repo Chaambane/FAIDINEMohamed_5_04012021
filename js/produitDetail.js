@@ -27,7 +27,7 @@ const boxTeddie = document.querySelector('.box_detail');
 const afficherUnArticle = (data) => {
     let articleChoisie = document.createElement("div");
     articleChoisie.innerHTML =
-    `<div class="card text-center col-12" > 
+    `<div class="card text-center col-lg-8" > 
             <div class="card-header">
                 <h2> ${data.name}</h2>
                 <p> ${data.price } € </p> 

@@ -1,4 +1,5 @@
 let idArticles = [];
+
 const afficherMonpanier = () => {
     if(localStorage.getItem('article') != null) {
         chargerPanier();
@@ -67,8 +68,8 @@ if (boutonValidation) {
             .then(response => response.json()) 
                 .then(data => {
                     console.log(data);
-                    sessionStorage.setItem('order', JSON.stringify(data));
-                    console.log(sessionStorage);
+                    localStorage.setItem('order', JSON.stringify(data));
+                    console.log(localStorage);
                     window.location = "./commande.html"
                 }
             ).catch(err => console.log('Erreur : ' + err));
