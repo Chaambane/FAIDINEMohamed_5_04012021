@@ -73,14 +73,16 @@ const totalPanier = () => {
         totalCommande += (article.prix / 200) * article.quantite;
     }
     let totalArticle = document.querySelector("#TotalPanier");
-    return totalArticle.innerHTML = "Total de votre Commande : " +  totalCommande.toFixed(2) + " € ";
+    if(totalArticle){
+        return totalArticle.innerHTML = "Total de votre Commande : " +  totalCommande.toFixed(2) + " € ";
+    }
+    localStorage.setItem("ttpanier", totalPanier());
 };
-localStorage.setItem("TTPanier", totalPanier());
 
 
 // Bouton Supprimer un article du panier
-const btnSupprimerArticlePanier = () => {
-    mesArticles.splice(article, 1);
+const btnSupprimerArticlePanier = (index) => {
+    mesArticles.splice(index, 1);
     sauvegarderArticle();
     location.reload();
 };
@@ -90,7 +92,6 @@ let supprimerPanier = document.querySelector('.suppPanier');
 if(supprimerPanier){
     supprimerPanier.addEventListener('click', (event)=>{
         localStorage.clear();
-        location.reload();
     });
 }
 
@@ -102,3 +103,4 @@ if(continuerAchat){
     })
 }
 
+console.log(sessionStorage);
