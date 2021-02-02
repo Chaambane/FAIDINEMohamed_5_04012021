@@ -9,7 +9,6 @@ const selectionneQuantité = () => {
     }
 };
 
-
 // Choix de la couleur du nounours
 const couleurArticle = (data) => {
     let couleur = document.querySelector('#choixCouleur')
@@ -26,8 +25,6 @@ if(btnAllerPanier){
         document.location.href = './panier.html';
 });
 }
-
-
 
 // PANIER
 
@@ -76,7 +73,6 @@ const totalPanier = () => {
     if(totalArticle){
         return totalArticle.innerHTML = "Total de votre Commande : " +  totalCommande.toFixed(2) + " € ";
     }
-    localStorage.setItem("ttpanier", totalPanier());
 };
 
 
@@ -102,5 +98,3 @@ if(continuerAchat){
         document.location.href = './index.html';
     })
 }
-
-console.log(sessionStorage);

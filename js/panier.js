@@ -1,5 +1,5 @@
 let products = [];
-console.log(products);
+// console.log(products);
 const afficherMonpanier = () => {
     if(localStorage.getItem('article') != null) {
         chargerPanier();
@@ -51,24 +51,24 @@ boutonValidation.addEventListener("click", (event) => {
         const contact = {
         firstName : document.getElementById("form_prenom").value,
         lastName : document.getElementById("form_nom").value,
-        adress : document.getElementById("form_address").value,
+        address : document.getElementById("form_address").value,
         city : document.getElementById("form_ville").value,
         email : document.getElementById("form_email").value,
         }
-        console.log(products);
-        fetch("http://localhost:3000/api/teddies/order", { 
-            method: "POST",
+        console.log(products, contact);
+
+        fetch('http://localhost:3000/api/teddies/order', { 
+            method: 'post',
             headers: { 
-                "Content-Type": "application/json" 
+                'Content-Type': 'application/JSON'
             },
-            body: JSON.stringify({contact, products})
+            body: JSON.stringify({products, contact})
         })
         .then(response => response.json())
         .then(data => {
             console.log(data);
             sessionStorage.setItem('order', JSON.stringify(data));
-            console.log(sessionStorage);
-            window.location = `./commande.html?id=${data["orderId"]}&price=${totalPanier()}`;
+            window.location = "./commande.html";
         })
         .catch(err => console.log('Erreur : ' + err));
     }
