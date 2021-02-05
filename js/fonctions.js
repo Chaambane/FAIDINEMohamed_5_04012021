@@ -1,23 +1,5 @@
 // PRODUIT DETAIL
 
-// Nombre d'article qu'on souhaite
-const selectionneQuantité = () => {
-    let quantiteArticle = document.querySelector('#quantite')
-    for(let i = 1; i <= 10; i++){ 
-        quantiteArticle.innerText += i;
-        quantiteArticle.append(choixQuantité);
-    }
-};
-
-// Choix de la couleur du nounours
-const couleurArticle = (data) => {
-    let couleur = document.querySelector('#choixCouleur')
-    for(let i = 0; i < data.colors.length; i++){
-        let couleurChoisie = document.createElement("option");
-        couleurChoisie.innerText = data.colors[i];
-        couleur.append(couleurChoisie);
-    }
-};
 
 const btnAllerPanier = document.querySelector(".btnPagePanier");
 if(btnAllerPanier){
@@ -88,6 +70,7 @@ let supprimerPanier = document.querySelector('.suppPanier');
 if(supprimerPanier){
     supprimerPanier.addEventListener('click', (event)=>{
         localStorage.clear();
+        location.reload();
     });
 }
 
