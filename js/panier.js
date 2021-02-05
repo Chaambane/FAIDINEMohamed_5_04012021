@@ -46,16 +46,34 @@ afficherMonpanier();
 let boutonValidation = document.querySelector("#btnValiderForm");
 let formulaireCommande = document.querySelector("#formulaireCommande");
 boutonValidation.addEventListener("click", (event) => {
-    if(formulaireCommande.checkValidity()){
-        event.preventDefault();
-        const contact = {
-        firstName : document.getElementById("form_prenom").value,
-        lastName : document.getElementById("form_nom").value,
-        address : document.getElementById("form_address").value,
-        city : document.getElementById("form_ville").value,
-        email : document.getElementById("form_email").value,
-        }
-        console.log(products, contact);
+    event.preventDefault();
+    let formContactInvalide = "";
+    let firstName = document.querySelector("#form_prenom").value;
+    let lastName = document.querySelector("#form_nom").value;
+    let address = document.querySelector("#form_address").value;
+    let city = document.querySelector("#form_ville").value;
+    let email = document.querySelector("#form_email").value;
+
+    if (/^[0-9 -]+$/.test(firstName))
+        formContactInvalide += "Prénom  \n";
+    if (/^[0-9 -]+$/.test(lastName))
+        formContactInvalide += "Nom  \n";
+    if (!address)
+        formContactInvalide += "Adresse  \n";
+    if (/[0-9]/.test(city) || !city)
+        formContactInvalide += "Ville  \n";
+    if (!/@/.test(email) || !email)
+        formContactInvalide += "Email  \n";
+    if(formContactInvalide)
+        alert("Formulaire Invalide : Veuillez renseigner les champs mentionnés: \n" + formContactInvalide);
+    else {
+        let contact = {
+            firstName : firstName,
+            lastName : lastName,
+            address : address,
+            city : city,
+            email : email,
+        };
 
         fetch('http://localhost:3000/api/teddies/order', { 
             method: 'post',
@@ -64,12 +82,18 @@ boutonValidation.addEventListener("click", (event) => {
             },
             body: JSON.stringify({products, contact})
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            sessionStorage.setItem('order', JSON.stringify(data));
+        .then((response) => {
+            /* Si connection ok ajout orderId au local storage */
+            if (response.ok) {
+              response.json()
+            .then((data) => {
+                console.log(data);
+                sessionStorage.setItem('order', JSON.stringify(data));
+            });
             window.location = "./commande.html";
-        })
-        .catch(err => console.log('Erreur : ' + err));
+            } else {
+                Promise.reject(response.status);
+            }
+        }).catch(err => console.log('Erreur : ' + err));
     }
 })
